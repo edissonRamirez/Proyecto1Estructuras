@@ -32,23 +32,30 @@ class GUI:
         # Crear un marco para contener el cuadro de resultados
         result_frame = tk.Frame(self.root, width=results_width, height= results_height, bg='white')
         result_frame.grid(row=0, column=0, padx=50, pady=20, sticky="nsew")
+        result_frame.grid_rowconfigure(0, weight=1)  # Configuración para expansión vertical
+        result_frame.grid_columnconfigure(0, weight=1)  # Configuración para expansión horizontal
 
         # Crear un cuadro de texto para mostrar los resultados
-        self.result_text = tk.Text(result_frame)
+        self.result_text = tk.Text(result_frame, wrap = "word")
         self.result_text.grid(row=0, column=0, padx=10, pady=10)
 
         # Crear un marco para contener el cuadro de instrucciones
         instructions_frame = tk.Frame(self.root, width=instructions_width, height=instructions_height, bg='white')
         instructions_frame.grid(row=0, column=1, padx=50, pady=20, sticky="nsew")
+        instructions_frame.grid_rowconfigure(0, weight=1)  # Configuración para expansión vertical
+        instructions_frame.grid_columnconfigure(0, weight=1)  # Configuración para expansión horizontal
 
         # Crear un cuadro de texto para mostrar las instrucciones
-        self.instructions_text = tk.Text(instructions_frame)
+        self.instructions_text = tk.Text(instructions_frame, wrap = "word")
         self.instructions_text.grid(row=0, column=0, padx=10, pady=10)
 
         # Agregar las instrucciones al cuadro de texto de las instrucciones
+        self.instructions_text.insert(tk.END, "--- IMPORTANTE --- \n \n")
+        self.instructions_text.insert(tk.END, "Para que el programa funcione, primero debe presionar el botón 'Explorar' \n \n")
         self.instructions_text.insert(tk.END, "1. Presionar el botón de explorar para ver todos los directorios y archivos de un directorio \n \n")
         self.instructions_text.insert(tk.END, "2. Para usar el botón 'Renombrar', selecciona la carpeta o archivo y proporciona un nuevo nombre \n \n")
         self.instructions_text.insert(tk.END, "3. El botón 'Eliminar' sirve para borrar directorios con su contenido\n \n")
+        self.instructions_text.insert(tk.END, "4. El botón 'Eliminar archivo' permite seleccionar para eliminar únicamente un archivo")
         
 
         # Configurar la alineación de los cuadros al centro
