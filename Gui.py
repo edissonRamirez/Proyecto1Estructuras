@@ -9,6 +9,8 @@ class GUI:
         
         self.root = tk.Tk()
         self.root.title("Gestor de Archivos")
+        self.root.geometry("1000x400")
+
 
         # Obtener las dimensiones de la pantalla
         screen_width = self.root.winfo_screenwidth()
@@ -32,7 +34,7 @@ class GUI:
         result_frame.grid(row=0, column=0, padx=50, pady=20, sticky="nsew")
 
         # Crear un cuadro de texto para mostrar los resultados
-        self.result_text = tk.Text(result_frame, height=10, width=50)
+        self.result_text = tk.Text(result_frame)
         self.result_text.grid(row=0, column=0, padx=10, pady=10)
 
         # Crear un marco para contener el cuadro de instrucciones
@@ -40,8 +42,14 @@ class GUI:
         instructions_frame.grid(row=0, column=1, padx=50, pady=20, sticky="nsew")
 
         # Crear un cuadro de texto para mostrar las instrucciones
-        self.instructions_text = tk.Text(instructions_frame, height=10, width=20)
+        self.instructions_text = tk.Text(instructions_frame)
         self.instructions_text.grid(row=0, column=0, padx=10, pady=10)
+
+        # Agregar las instrucciones al cuadro de texto de las instrucciones
+        self.instructions_text.insert(tk.END, "1. Presionar el botón de explorar para ver todos los directorios y archivos de un directorio \n \n")
+        self.instructions_text.insert(tk.END, "2. Para usar el botón 'Renombrar', selecciona la carpeta o archivo y proporciona un nuevo nombre \n \n")
+        self.instructions_text.insert(tk.END, "3. El botón 'Eliminar' sirve para borrar directorios con su contenido\n \n")
+        
 
         # Configurar la alineación de los cuadros al centro
         self.root.grid_rowconfigure(0, weight=1)
@@ -87,11 +95,10 @@ class GUI:
         ruta_inicial = filedialog.askdirectory(title="Seleccionar directorio")
         self.gestor.arbol_directorios.add_node(ruta_inicial)
         if ruta_inicial:
-            resultado = f"{os.path.basename(ruta_inicial)} en {ruta_inicial}"
-            print(resultado)
+            resultado = f"{os.path.basename(ruta_inicial)}"
             self.result_text.insert("end", resultado + "\n")
             self.result_text.see("end")
-            self.gestor.explorar(ruta_inicial, ruta_inicial)
+            self.gestor.explorar(ruta_inicial, "   ",ruta_inicial)
     
     def renombrar(self):
         ruta_original = filedialog.askdirectory(title="Seleccionar directorio original")
