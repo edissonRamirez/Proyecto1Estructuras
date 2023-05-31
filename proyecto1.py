@@ -25,7 +25,6 @@ class Gestor:
             try:
                 os.rename(ruta_original, ruta_nueva)
                 self.arbol_directorios.rename_node(ruta_original, ruta_nueva)
-                print(self.arbol_directorios.find_node(ruta_nueva))
                 print("El archivo/carpeta se ha renombrado exitosamente.")
             except:
                 print("Error al renombrar el archivo/carpeta.")
@@ -53,5 +52,16 @@ class Gestor:
                 print(f"No se pudo eliminar el archivo {locacion}: {e}")
         else:
             print(f"Ubicación inválida: {locacion}")
+
+    def buscar(self):
+        opciones = []
+
+        def agregar_nombres(node):
+            opciones.append(node.data)
+            for child in node.children:
+                agregar_nombres(child)
+
+        agregar_nombres(self.arbol_directorios.root)
+        return opciones
 
         

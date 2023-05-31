@@ -22,18 +22,16 @@ class GUI:
         instructions_width = int(screen_width * 0.3)
         instructions_height = int(screen_height * 0.8)
 
-        # Calcular las coordenadas para centrar los cuadros verticalmente
-        x = (screen_width - results_width) // 2
-        y = (screen_height - results_height) // 2
-
         # Establecer el color de fondo de la interfaz
         self.root.configure(bg='#152a38')
 
         # Crear un marco para contener el cuadro de resultados
         result_frame = tk.Frame(self.root, width=results_width, height= results_height, bg='white')
         result_frame.grid(row=0, column=0, padx=50, pady=20, sticky="nsew")
-        result_frame.grid_rowconfigure(0, weight=1)  # Configuración para expansión vertical
-        result_frame.grid_columnconfigure(0, weight=1)  # Configuración para expansión horizontal
+
+        # Configuraión para expansión vertical y horizontal del cuadro de resultados
+        result_frame.grid_rowconfigure(0, weight=1)  
+        result_frame.grid_columnconfigure(0, weight=1)  
 
         # Crear un cuadro de texto para mostrar los resultados
         self.result_text = tk.Text(result_frame, wrap = "word")
@@ -42,8 +40,10 @@ class GUI:
         # Crear un marco para contener el cuadro de instrucciones
         instructions_frame = tk.Frame(self.root, width=instructions_width, height=instructions_height, bg='white')
         instructions_frame.grid(row=0, column=1, padx=50, pady=20, sticky="nsew")
-        instructions_frame.grid_rowconfigure(0, weight=1)  # Configuración para expansión vertical
-        instructions_frame.grid_columnconfigure(0, weight=1)  # Configuración para expansión horizontal
+
+        # Configuraión para expansión vertical y horizontal del cuadro de instrucciones
+        instructions_frame.grid_rowconfigure(0, weight=1)  
+        instructions_frame.grid_columnconfigure(0, weight=1)  
 
         # Crear un cuadro de texto para mostrar las instrucciones
         self.instructions_text = tk.Text(instructions_frame, wrap = "word")
@@ -79,17 +79,21 @@ class GUI:
         button_frame.grid(row=1, column=0, columnspan=2, sticky="ew")
 
         # Crear los botones
-        self.explorar_button = tk.Button(button_frame, text="Explorar", command=self.explorar, width=20, bg='#556e53')
+        self.explorar_button = tk.Button(button_frame, text="Explorar", command=self.explorar, width=20, height=4, bg='#556e53')
         self.explorar_button.grid(row=0, column=0, pady=5, padx=10)
         
-        self.renombrar_button = tk.Button(button_frame, text="Renombrar", command=self.renombrar, width=20, bg='#556e53')
+        self.renombrar_button = tk.Button(button_frame, text="Renombrar", command=self.renombrar, width=20, height=2,bg='#556e53')
         self.renombrar_button.grid(row=0, column=1, pady=10, padx=5)
         
-        self.eliminar_button = tk.Button(button_frame, text="Eliminar", command=self.eliminar, width=20, bg='#556e53')
+        self.eliminar_button = tk.Button(button_frame, text="Eliminar", command=self.eliminar, width=20, height=2,bg='#556e53')
         self.eliminar_button.grid(row=0, column=2, pady=10, padx=10)
 
-        self.eliminar_archivo_button = tk.Button(button_frame, text="Eliminar Archivo", command=self.eliminar_archivo, width=20, bg='#556e53')
+        self.eliminar_archivo_button = tk.Button(button_frame, text="Eliminar Archivo", command=self.eliminar_archivo, width=20, height=2,bg='#556e53')
         self.eliminar_archivo_button.grid(row=0, column=3, pady=10, padx=10)
+
+        self.buscar_button = tk.Button(button_frame, text="Buscar", command=self.buscar, width=20, height=2,bg='#556e53')
+        self.buscar_button.grid(row=0, column=4, pady=10, padx=10)  
+
 
         # Configurar la alineación de los botones al centro
         button_frame.grid_rowconfigure(0, weight=1)
@@ -124,6 +128,25 @@ class GUI:
     
     def run(self):
         self.root.mainloop()
+
+    def buscar(self):
+        nombre = simpledialog.askstring("Buscar", "Ingrese el nombre a buscar:")
+        opciones = self.gestor.buscar()
+        for archivo in opciones:
+            nombre_nodo=os.path.basename(archivo)
+            if nombre==nombre_nodo:
+              print(f"El archivo/carpeta '{nombre}' existe y su ruta es'{archivo}' \n")
+              if os.path.isdir(archivo):
+                lista_archivos = os.listdir(archivo)
+                print(f"contenido:"+"\n")
+                for archivos in lista_archivos:
+                    nombres=os.path.basename(archivos)
+                    print(f"'{nombres}'")
+
+
+    def run(self):
+        self.root.mainloop()
+
 class StdoutRedirector:
     def __init__(self, text_widget):
         self.text_widget = text_widget

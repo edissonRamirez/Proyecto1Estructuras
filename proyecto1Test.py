@@ -11,8 +11,3 @@ gui = GUI(explorador)
 # Ejecutar la interfaz gráfica
 gui.run()
 
-# explorador.explorar("C:\\Prueba", "C:\\Prueba")
-# explorador.renombrar("C:\\Prueba\\pruebarenombrada", "pruebarenombrar")
-# explorador.eliminar("C://Prueba\\pruebaeliminar")
-# print(explorador.arbol_directorios.find_node("C://Prueba\\PruebaEliminar"))
-# explorador.explorar("C://Prueba", "C://Prueba")
