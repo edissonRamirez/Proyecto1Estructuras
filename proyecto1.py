@@ -6,17 +6,18 @@ class Gestor:
     def __init__(self):
         self.arbol_directorios = NaryTree()
 
-    def explorar(self, ruta_actual, padre = None):
+    def explorar(self, ruta_actual, ident="", padre = None):
         lista_archivos = os.listdir(ruta_actual)
         for archivo in lista_archivos:
                 ruta_completa = ruta_actual +"/"+ archivo 
                 nodo = NaryTreeNode(ruta_completa)
                 self.arbol_directorios.add_node(ruta_completa, ruta_actual)
                 nombre = os.path.basename(nodo.data)
-                nombre_padre = os.path.basename(padre)
-                print(nombre, 'en ', nodo.data)
                 if os.path.isdir(ruta_completa):
-                    self.explorar(ruta_completa, nodo.data)
+                    print(f"{ident}{nombre}/")
+                    self.explorar(ruta_completa, ident + "   ",nodo.data)
+                else:
+                    print(f"{ident}{nombre}")
     def renombrar(self, ruta_original, nombre):
         padre=self.arbol_directorios._find_parent(ruta_original, self.arbol_directorios.root)
         if padre:
